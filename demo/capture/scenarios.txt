@@ -1,0 +1,18 @@
+PASS  idot_source_short        status complete  faults E202  deviations D050
+PASS  incubator_excursion      status complete  faults E401  deviations D050,D052
+PASS  late_handoff_abort       status aborted  faults -  no record
+PASS  late_wake_beyond_tolerance status complete  faults -  deviations D043
+PASS  late_wake_within_tolerance status complete  faults -  deviations -
+PASS  lost_plate               status complete  faults E302  deviations D050,D051
+PASS  low_tips                 status complete  faults E101  deviations D050
+PASS  nobody_there             status paused  faults E302  no record
+PASS  nobody_there_then_found  status complete  faults E302  deviations D050,D051
+PASS  short_cells_pause        status complete  faults E102  deviations D040,D041,D050
+PASS  short_reagent            status complete  faults E102  deviations D042,D050
+PASS  stops_at_incubation      status waiting  faults -  no record
+PASS  stuck_arm                status complete  faults E301,E301,E301,E301  deviations D050
+PASS  transient_faults         status complete  faults E301,E201,E601,E601  deviations -
+PASS  wrong_plate_abort        status aborted  faults E602  no record
+
+15 of 15 scenarios behave as expected
+[exit 0]

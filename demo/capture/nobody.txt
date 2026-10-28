@@ -1,0 +1,10 @@
+[WARN] V001: Final DMSO is 0.075% (up to 30 nL into 40 uL), above the 0.05% warning level (limit 0.1%). Run a solvent tolerance check for this cell line -> Build continues, warning recorded in run record (Scientist: confirm before running)
+[WARN] V042: First-to-last-well reagent lag: estimated 14.1 min, window 15 min (above 80% of window) -> Build continues, warning recorded in run record (Scientist: confirm before running)
+
+Built 5 files + manifest in out/b/HTS-CTG3D-001 (2 warning(s))
+
+Run a325a5d8-47ab-4c3b-a517-671962898c48: paused  (simulated clock 2026-11-02T09:42:06+00:00)
+  PAUSED: E302 Plate lost or dropped in transit
+  needs a person: no operator available
+  continue with:  python -m htsorch resume out/b/HTS-CTG3D-001/state.json --operator NAME --decision retry|abort|continue
+[exit 2]

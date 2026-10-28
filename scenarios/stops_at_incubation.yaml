@@ -1,0 +1,6 @@
+description: the run stops at the 72 h incubation with its state saved
+expect:
+  status: waiting
+  events_include: [wait_scheduled]
+  events_absent: [wake_and_verify, flex_reagent]
+  package: false

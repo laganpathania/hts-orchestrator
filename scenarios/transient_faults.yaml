@@ -1,0 +1,11 @@
+description: three instruments hiccup; the system retries and nobody is called
+faults:
+  - {device: arm,    command: move,     code: E301, at: 3}      # handoff fails before pick-up
+  - {device: idot,   command: dispense, code: E201}             # dispense verification fails once
+  - {device: reader, command: read,     code: E601, times: 2}   # reader not ready, twice
+expect:
+  status: complete
+  faults: [E301, E201, E601, E601]
+  deviations: []
+  interventions: 0
+  plate_flags: {ASSAY-0001: [], PREP-0001: []}

@@ -1,0 +1,7 @@
+description: the orchestrator wakes 3 h after the 72 h incubation (tolerance is 2 h)
+wake_delay_h: 3
+expect:
+  status: complete
+  faults: []
+  deviations: [D043]
+  interventions: 0

@@ -1,0 +1,26 @@
+PASS       OQ-01  Spec limits block an unworkable experiment
+PASS       OQ-02  Findings say what, where and who
+PASS       OQ-03  Time windows are predicted before the run
+PASS       OQ-04  Windows are enforced during the run
+PASS       OQ-05  Plate map completeness and balance
+PASS       OQ-06  Plate map and files are reproducible
+PASS       OQ-07  Instrument programs load and match the plan
+PASS       OQ-08  Lysis chemistry limits
+PASS       OQ-09  Plate custody rules
+PASS       OQ-10  Lost plate
+PASS       OQ-11  Quarantine and release
+PASS       OQ-12  Device fault model
+PASS       OQ-13  Retries and fixes are limited
+PASS       OQ-14  Shortages and resuming half-done steps
+PASS       OQ-15  Incubator excursion
+PASS       OQ-16  Wrong plate at the reader
+PASS       OQ-17  Persistence across the 72 h wait
+PASS       OQ-18  Audit trail integrity
+PASS       OQ-19  Data package content
+PASS       OQ-20  AnIML export
+PASS       OQ-21  Analysis against known truth
+PASS       OQ-22  Command line outcomes
+PASS       OQ-23  Scenario runner catches wrong behaviour
+
+QUALIFIED: report in out/q/OQ_report.md
+[exit 0]

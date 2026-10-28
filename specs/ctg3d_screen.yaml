@@ -1,0 +1,95 @@
+# Example experiment spec: 384-well spheroid dose-response screen, CellTiter-Glo 3D readout.
+# Values marked VERIFY are placeholders that must be checked against the vendor
+# datasheet / protocol before anyone treats them as real limits.
+
+experiment:
+  id: HTS-CTG3D-001
+  description: >
+    20 compounds x 5 concentrations x 3 replicates plus negative (DMSO solvent)
+    and positive (kill) controls on one randomized 384-well ULA round-bottom plate.
+  random_seed: 20261022
+
+assay:
+  plate:
+    barcode: ASSAY-0001
+    format: 384
+    description: Ultra-low-attachment round-bottom 384-well plate (spheroid)
+    # No stock Opentrons definition exists for a ULA round-bottom plate; this is a
+    # stand-in. A custom labware definition is needed on real hardware.
+    opentrons_load_name: corning_384_wellplate_112ul_flat
+    max_working_volume_ul: 80      # VERIFY against plate datasheet
+  media_volume_ul: 20
+  cell_volume_ul: 20
+  compound_dispense:
+    # iDOT volume per well is derived, not fixed: volume = final concentration x assay volume / stock concentration.
+    min_nl: 20                     # iDOT lower limit per dispense (VERIFY against iDOT documentation)
+    top_nl: 30                     # volume at the top concentration; sets the top stock (must not exceed the master)
+    # The largest volume is bounded by the DMSO limit below: 0.1% of 40 uL is 40 nL, so every dispense must stay under it.
+  edge:
+    # What happens to the 76 perimeter wells (evaporation over 72 h):
+    #   assay    - perimeter holds normal conditions (stratified randomization)
+    #   controls - perimeter holds controls only; any controls beyond 76 go inside
+    #   pbs_fill - perimeter (and unused wells) filled with PBS, no cells, no compound
+    policy: assay
+    pbs_volume_ul: 40              # pbs_fill only; should equal the assay volume
+  reagent:
+    name: CellTiter-Glo 3D
+    ratio_to_assay_volume: 1.0     # VERIFY against vendor protocol
+    # Spheroids need longer lysis than 2D cultures: vigorous shake, then incubate.
+    shake_min: 5
+    incubate_min: 30
+    shake_min_required: 5          # VERIFY against vendor protocol
+    incubate_min_required: 25      # VERIFY against vendor protocol
+  limits:
+    dmso_max_percent: 0.1          # hard limit: final DMSO must stay below this (build blocked at or above)
+    dmso_warn_percent: 0.05        # warning above this (cell line tolerance check)
+
+compounds:
+  master_conc_mM: 20             # 20 mM is needed: 10 uM final from at most 39 nL into 40 uL
+  master_available_ul: 30
+  ids: [C01, C02, C03, C04, C05, C06, C07, C08, C09, C10,
+        C11, C12, C13, C14, C15, C16, C17, C18, C19, C20]
+
+controls:
+  negative: {name: DMSO solvent, count: 42}
+  positive: {name: Kill control, count: 42, master_conc_mM: 20, master_available_ul: 30}
+
+dilution:
+  top_final_uM: 10
+  factor: 4                        # final concentration series
+  # stock_factor: 4                # optional: serial factor of the prep-plate stocks; defaults to factor.
+  #                                # Different from factor makes the iDOT volume vary per concentration.
+  points: 5
+  replicates: 3
+
+prep_plate:
+  barcode: PREP-0001
+  well_volume_ul: 25
+  idot_source_dead_volume_ul: 5    # VERIFY against iDOT documentation
+
+flex:
+  overage_ul: 1
+  mix_cell_every_cycles: 4
+  pipettes:
+    flex_1channel_50: {min_ul: 1, max_ul: 50}   # VERIFY against Opentrons docs
+    flex_8channel_50: {min_ul: 1, max_ul: 50}   # VERIFY against Opentrons docs
+  tip_racks_loaded: {dilution: 1, edge_fill: 1, seeding: 1, readout: 1}
+  reservoirs:
+    media:   {load_name: nest_12_reservoir_15ml,  capacity_ul: 15000,  dead_volume_ul: 1500}
+    cells:   {load_name: nest_12_reservoir_15ml,  capacity_ul: 15000,  dead_volume_ul: 1500}
+    reagent: {load_name: nest_1_reservoir_195ml,  capacity_ul: 195000, dead_volume_ul: 5000}
+    dmso:    {load_name: nest_12_reservoir_15ml,  capacity_ul: 15000,  dead_volume_ul: 1500}
+    pbs:     {load_name: nest_12_reservoir_15ml,  capacity_ul: 15000,  dead_volume_ul: 1500}   # used by pbs_fill only
+
+timing:
+  # Placeholder estimates. Replace with measured values from real runs.
+  flex_cycle_s: 18
+  idot_dispense_min: 15            # typically 10-15 min per 384-well plate; the upper end is used so window checks stay conservative (VERIFY on the real instrument)
+  arm_transfer_min: 2
+  cell_prep_to_start_min: 5
+  windows:
+    compound_to_cells_max_min: 60
+    cell_suspension_max_age_min: 45
+    max_reagent_lag_min: 15        # first-to-last well reagent delay
+    incubation_h: 72
+    incubation_tolerance_h: 2

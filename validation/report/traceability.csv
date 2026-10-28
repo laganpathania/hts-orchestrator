@@ -1,0 +1,29 @@
+urs,requirement,risks,case,case_title,codes,result
+URS-01,Experiment spec is checked before any run,R-09 R-10,OQ-01,Spec limits block an unworkable experiment,V001 V002 V010 V011 V012 V020 V021 V030 V060,pass
+URS-01,Experiment spec is checked before any run,R-09 R-10,OQ-02,"Findings say what, where and who",,pass
+URS-01,Experiment spec is checked before any run,R-09 R-10,OQ-14,Shortages and resuming half-done steps,E101 E102 E202,pass
+URS-02,Time windows are predicted before the run and enforced during it,R-04 R-05,OQ-03,Time windows are predicted before the run,V040 V041 V042 V043 V045,pass
+URS-02,Time windows are predicted before the run and enforced during it,R-04 R-05,OQ-04,Windows are enforced during the run,D040 D041 D042 D043,pass
+URS-03,"Plate map is complete, unique and balanced",R-08,OQ-05,Plate map completeness and balance,V013 V014 V050 V051 V052,pass
+URS-04,Plate map is reproducible,R-17,OQ-06,Plate map and files are reproducible,,pass
+URS-05,Instrument programs are generated and proven loadable,R-17,OQ-07,Instrument programs load and match the plan,,pass
+URS-06,Assay chemistry limits are respected,R-07,OQ-08,Lysis chemistry limits,V044,pass
+URS-07,A plate is always in exactly one known place,R-02 R-03,OQ-09,Plate custody rules,K001 K003 K004 K005 K006 K007 K008 K009 K010 K011 K012 K013 K014 K015,pass
+URS-08,A lost plate never goes unnoticed,R-02,OQ-10,Lost plate,E302 C001 C002 D051 K009,pass
+URS-09,Plates can be quarantined and released only by a person,R-18,OQ-11,Quarantine and release,Q001 Q002 K008 K009,pass
+URS-10,Faults are handled by policy,R-01 R-06 R-07 R-10 R-13 R-15,OQ-12,Device fault model,E001 E103 E201 E301 E402 E501 E601 E701,pass
+URS-10,Faults are handled by policy,R-01 R-06 R-07 R-10 R-13 R-15,OQ-13,Retries and fixes are limited,D050,pass
+URS-10,Faults are handled by policy,R-01 R-06 R-07 R-10 R-13 R-15,OQ-14,Shortages and resuming half-done steps,E101 E102 E202,pass
+URS-10,Faults are handled by policy,R-01 R-06 R-07 R-10 R-13 R-15,OQ-15,Incubator excursion,E401 D052,pass
+URS-11,Half-done steps resume without repeating work,R-01 R-10,OQ-14,Shortages and resuming half-done steps,E101 E102 E202,pass
+URS-12,The 72 h wait survives a restart and cannot be tampered with,R-05 R-11,OQ-17,Persistence across the 72 h wait,,pass
+URS-13,"The audit trail is attributable, ordered and tamper-evident",R-11 R-12,OQ-18,Audit trail integrity,,pass
+URS-14,Deviations are recorded where the data are,R-04 R-05 R-06 R-13,OQ-04,Windows are enforced during the run,D040 D041 D042 D043,pass
+URS-14,Deviations are recorded where the data are,R-04 R-05 R-06 R-13,OQ-15,Incubator excursion,E401 D052,pass
+URS-14,Deviations are recorded where the data are,R-04 R-05 R-06 R-13,OQ-19,Data package content,,pass
+URS-15,The data package is complete and verifiable,R-12 R-16 R-17,OQ-19,Data package content,,pass
+URS-16,Results are exported in AnIML,,OQ-20,AnIML export,,pass
+URS-17,Analysis is checked against known truth,,OQ-21,Analysis against known truth,,pass
+URS-18,Wrong data cannot enter by accident,R-14,OQ-16,Wrong plate at the reader,E602,pass
+URS-19,Run outcomes are unambiguous for automation,R-13,OQ-22,Command line outcomes,,pass
+URS-20,Failure behaviour is regression-tested,,OQ-23,Scenario runner catches wrong behaviour,,pass

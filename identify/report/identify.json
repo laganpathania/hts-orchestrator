@@ -1,0 +1,545 @@
+{
+  "baseline": {
+    "compound_mode": "hand",
+    "steps_min": {
+      "setup and calculation": 45,
+      "dilution series": 51.0,
+      "compound transfer by hand: 102 aspirations, 384 dispenses": 98.0,
+      "media, cells and reagent additions (8-channel, multi-dispense)": 47.8,
+      "carrying plates between instruments": 14,
+      "cleanup and documentation": 40,
+      "export and analysis": 40
+    },
+    "hands_on_h": 5.6,
+    "transfer_operations": 828,
+    "compound_step_min": 98.0,
+    "compound_to_cells_min": 98.0,
+    "compound_to_cells_window_min": 60,
+    "window_ratio": 1.63,
+    "reagent_lag_min": 11.2,
+    "reagent_lag_window_min": 15,
+    "seeding_min": {
+      "media": 8.8,
+      "cells": 9.8,
+      "reagent": 11.2
+    },
+    "p_plate_has_a_transfer_error": 0.339
+  },
+  "reference_by_hand": {
+    "compound_mode": "hand",
+    "steps_min": {
+      "setup and calculation": 45,
+      "dilution series": 51.0,
+      "compound transfer by hand: 102 aspirations, 384 dispenses": 98.0,
+      "media, cells and reagent additions (8-channel, multi-dispense)": 47.8,
+      "carrying plates between instruments": 14,
+      "cleanup and documentation": 40,
+      "export and analysis": 40
+    },
+    "hands_on_h": 5.6,
+    "transfer_operations": 828,
+    "compound_step_min": 98.0,
+    "compound_to_cells_min": 98.0,
+    "compound_to_cells_window_min": 60,
+    "window_ratio": 1.63,
+    "reagent_lag_min": 11.2,
+    "reagent_lag_window_min": 15,
+    "seeding_min": {
+      "media": 8.8,
+      "cells": 9.8,
+      "reagent": 11.2
+    },
+    "p_plate_has_a_transfer_error": 0.339
+  },
+  "reference_idot_assisted": {
+    "compound_mode": "idot",
+    "steps_min": {
+      "setup and calculation": 45,
+      "dilution series": 51.0,
+      "iDOT dosing: load and start (15 min run is unattended)": 10,
+      "media, cells and reagent additions (8-channel, multi-dispense)": 47.8,
+      "carrying plates between instruments": 14,
+      "cleanup and documentation": 40,
+      "export and analysis": 40
+    },
+    "hands_on_h": 4.13,
+    "transfer_operations": 342,
+    "compound_step_min": 10,
+    "compound_to_cells_min": 20.6,
+    "compound_to_cells_window_min": 60,
+    "window_ratio": 0.34,
+    "reagent_lag_min": 11.2,
+    "reagent_lag_window_min": 15,
+    "seeding_min": {
+      "media": 8.8,
+      "cells": 9.8,
+      "reagent": 11.2
+    },
+    "p_plate_has_a_transfer_error": 0.157
+  },
+  "automated": {
+    "steps_min": {
+      "setup and loading": 45,
+      "monitoring and interventions": 20,
+      "day-3 loading": 15,
+      "review of the data package": 20
+    },
+    "hands_on_h": 1.67
+  },
+  "economics": {
+    "runs_per_year": 176,
+    "capex_eur": {
+      "flex_base": 22954,
+      "flex_pipettes_gripper_modules": 27600,
+      "idot": 55200,
+      "arm_cell": 73600,
+      "centrifuge_incubator_reader_interfaces": 18400
+    },
+    "capex_total_eur": 197754,
+    "one_off_effort_h": 560,
+    "one_off_effort_eur": 47600,
+    "one_off_total_eur": 245354,
+    "hands_on_hours_saved_per_year": 692,
+    "labour_saving_eur": 58793,
+    "manual_failed_plates_per_year": 59.7,
+    "auto_failed_plates_per_year": 3.5,
+    "failure_saving_eur": 25265,
+    "service_eur": 15820,
+    "net_annual_eur": 68237,
+    "payback_years": 3.6,
+    "npv_5y_eur": 27098
+  },
+  "fit": {
+    "scores": {
+      "repetition_and_volume": 4,
+      "hands_on_burden": 4,
+      "timing_criticality": 5,
+      "process_definition": 5,
+      "error_and_deviation_impact": 5,
+      "data_integrity_need": 5,
+      "technical_readiness": 3,
+      "throughput_growth": 3,
+      "method_stability": 4
+    },
+    "weights": {
+      "repetition_and_volume": 15,
+      "hands_on_burden": 15,
+      "timing_criticality": 15,
+      "process_definition": 10,
+      "error_and_deviation_impact": 10,
+      "data_integrity_need": 10,
+      "technical_readiness": 10,
+      "throughput_growth": 5,
+      "method_stability": 10
+    },
+    "percent": 86.0,
+    "verdict": "strong"
+  },
+  "cost_cases": {
+    "low cost (capex x0.7, effort x0.7)": {
+      "runs_per_year": 176,
+      "capex_eur": {
+        "flex_base": 16068,
+        "flex_pipettes_gripper_modules": 19320,
+        "idot": 38640,
+        "arm_cell": 51520,
+        "centrifuge_incubator_reader_interfaces": 12880
+      },
+      "capex_total_eur": 138428,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 33320,
+      "one_off_total_eur": 171748,
+      "hands_on_hours_saved_per_year": 692,
+      "labour_saving_eur": 58793,
+      "manual_failed_plates_per_year": 59.7,
+      "auto_failed_plates_per_year": 3.5,
+      "failure_saving_eur": 25265,
+      "service_eur": 11074,
+      "net_annual_eur": 72983,
+      "payback_years": 2.35,
+      "npv_5y_eur": 119654
+    },
+    "base": {
+      "runs_per_year": 176,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 692,
+      "labour_saving_eur": 58793,
+      "manual_failed_plates_per_year": 59.7,
+      "auto_failed_plates_per_year": 3.5,
+      "failure_saving_eur": 25265,
+      "service_eur": 15820,
+      "net_annual_eur": 68237,
+      "payback_years": 3.6,
+      "npv_5y_eur": 27098
+    },
+    "high cost (capex x1.5, effort x1.5)": {
+      "runs_per_year": 176,
+      "capex_eur": {
+        "flex_base": 34431,
+        "flex_pipettes_gripper_modules": 41400,
+        "idot": 82800,
+        "arm_cell": 110400,
+        "centrifuge_incubator_reader_interfaces": 27600
+      },
+      "capex_total_eur": 296631,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 71400,
+      "one_off_total_eur": 368031,
+      "hands_on_hours_saved_per_year": 692,
+      "labour_saving_eur": 58793,
+      "manual_failed_plates_per_year": 59.7,
+      "auto_failed_plates_per_year": 3.5,
+      "failure_saving_eur": 25265,
+      "service_eur": 23730,
+      "net_annual_eur": 60327,
+      "payback_years": 6.1,
+      "npv_5y_eur": -127162
+    }
+  },
+  "by_runs_per_week": {
+    "1": {
+      "runs_per_year": 44,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 173,
+      "labour_saving_eur": 14698,
+      "manual_failed_plates_per_year": 14.9,
+      "auto_failed_plates_per_year": 0.9,
+      "failure_saving_eur": 6316,
+      "service_eur": 15820,
+      "net_annual_eur": 5194,
+      "payback_years": 47.24,
+      "npv_5y_eur": -224616
+    },
+    "2": {
+      "runs_per_year": 88,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 346,
+      "labour_saving_eur": 29396,
+      "manual_failed_plates_per_year": 29.8,
+      "auto_failed_plates_per_year": 1.8,
+      "failure_saving_eur": 12632,
+      "service_eur": 15820,
+      "net_annual_eur": 26208,
+      "payback_years": 9.36,
+      "npv_5y_eur": -140711
+    },
+    "4": {
+      "runs_per_year": 176,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 692,
+      "labour_saving_eur": 58793,
+      "manual_failed_plates_per_year": 59.7,
+      "auto_failed_plates_per_year": 3.5,
+      "failure_saving_eur": 25265,
+      "service_eur": 15820,
+      "net_annual_eur": 68237,
+      "payback_years": 3.6,
+      "npv_5y_eur": 27098
+    },
+    "8": {
+      "runs_per_year": 352,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 1383,
+      "labour_saving_eur": 117586,
+      "manual_failed_plates_per_year": 119.3,
+      "auto_failed_plates_per_year": 7.0,
+      "failure_saving_eur": 50530,
+      "service_eur": 15820,
+      "net_annual_eur": 152295,
+      "payback_years": 1.61,
+      "npv_5y_eur": 362715
+    },
+    "16": {
+      "runs_per_year": 704,
+      "capex_eur": {
+        "flex_base": 22954,
+        "flex_pipettes_gripper_modules": 27600,
+        "idot": 55200,
+        "arm_cell": 73600,
+        "centrifuge_incubator_reader_interfaces": 18400
+      },
+      "capex_total_eur": 197754,
+      "one_off_effort_h": 560,
+      "one_off_effort_eur": 47600,
+      "one_off_total_eur": 245354,
+      "hands_on_hours_saved_per_year": 2767,
+      "labour_saving_eur": 235171,
+      "manual_failed_plates_per_year": 238.7,
+      "auto_failed_plates_per_year": 14.1,
+      "failure_saving_eur": 101059,
+      "service_eur": 15820,
+      "net_annual_eur": 320410,
+      "payback_years": 0.77,
+      "npv_5y_eur": 1033951
+    }
+  },
+  "variants": {
+    "full system (Flex, iDOT, arm)": {
+      "hands_on_h": 1.67,
+      "economics": {
+        "runs_per_year": 176,
+        "capex_eur": {
+          "flex_base": 22954,
+          "flex_pipettes_gripper_modules": 27600,
+          "idot": 55200,
+          "arm_cell": 73600,
+          "centrifuge_incubator_reader_interfaces": 18400
+        },
+        "capex_total_eur": 197754,
+        "one_off_effort_h": 560,
+        "one_off_effort_eur": 47600,
+        "one_off_total_eur": 245354,
+        "hands_on_hours_saved_per_year": 692,
+        "labour_saving_eur": 58793,
+        "manual_failed_plates_per_year": 59.7,
+        "auto_failed_plates_per_year": 3.5,
+        "failure_saving_eur": 25265,
+        "service_eur": 15820,
+        "net_annual_eur": 68237,
+        "payback_years": 3.6,
+        "npv_5y_eur": 27098
+      },
+      "breakeven_runs_per_week_3y": 4.6
+    },
+    "Flex and iDOT, no arm": {
+      "hands_on_h": 1.9,
+      "economics": {
+        "runs_per_year": 176,
+        "capex_eur": {
+          "flex_base": 22954,
+          "flex_pipettes_gripper_modules": 27600,
+          "idot": 55200,
+          "arm_cell": 0,
+          "centrifuge_incubator_reader_interfaces": 0
+        },
+        "capex_total_eur": 105754,
+        "one_off_effort_h": 560,
+        "one_off_effort_eur": 28560,
+        "one_off_total_eur": 134314,
+        "hands_on_hours_saved_per_year": 651,
+        "labour_saving_eur": 55352,
+        "manual_failed_plates_per_year": 59.7,
+        "auto_failed_plates_per_year": 3.5,
+        "failure_saving_eur": 25265,
+        "service_eur": 8460,
+        "net_annual_eur": 72156,
+        "payback_years": 1.86,
+        "npv_5y_eur": 153786
+      },
+      "breakeven_runs_per_week_3y": 2.6,
+      "by_runs_per_week": {
+        "1": {
+          "runs_per_year": 44,
+          "capex_eur": {
+            "flex_base": 22954,
+            "flex_pipettes_gripper_modules": 27600,
+            "idot": 55200,
+            "arm_cell": 0,
+            "centrifuge_incubator_reader_interfaces": 0
+          },
+          "capex_total_eur": 105754,
+          "one_off_effort_h": 560,
+          "one_off_effort_eur": 28560,
+          "one_off_total_eur": 134314,
+          "hands_on_hours_saved_per_year": 163,
+          "labour_saving_eur": 13838,
+          "manual_failed_plates_per_year": 14.9,
+          "auto_failed_plates_per_year": 0.9,
+          "failure_saving_eur": 6316,
+          "service_eur": 8460,
+          "net_annual_eur": 11694,
+          "payback_years": 11.49,
+          "npv_5y_eur": -87624
+        },
+        "2": {
+          "runs_per_year": 88,
+          "capex_eur": {
+            "flex_base": 22954,
+            "flex_pipettes_gripper_modules": 27600,
+            "idot": 55200,
+            "arm_cell": 0,
+            "centrifuge_incubator_reader_interfaces": 0
+          },
+          "capex_total_eur": 105754,
+          "one_off_effort_h": 560,
+          "one_off_effort_eur": 28560,
+          "one_off_total_eur": 134314,
+          "hands_on_hours_saved_per_year": 326,
+          "labour_saving_eur": 27676,
+          "manual_failed_plates_per_year": 29.8,
+          "auto_failed_plates_per_year": 1.8,
+          "failure_saving_eur": 12632,
+          "service_eur": 8460,
+          "net_annual_eur": 31848,
+          "payback_years": 4.22,
+          "npv_5y_eur": -7154
+        },
+        "4": {
+          "runs_per_year": 176,
+          "capex_eur": {
+            "flex_base": 22954,
+            "flex_pipettes_gripper_modules": 27600,
+            "idot": 55200,
+            "arm_cell": 0,
+            "centrifuge_incubator_reader_interfaces": 0
+          },
+          "capex_total_eur": 105754,
+          "one_off_effort_h": 560,
+          "one_off_effort_eur": 28560,
+          "one_off_total_eur": 134314,
+          "hands_on_hours_saved_per_year": 651,
+          "labour_saving_eur": 55352,
+          "manual_failed_plates_per_year": 59.7,
+          "auto_failed_plates_per_year": 3.5,
+          "failure_saving_eur": 25265,
+          "service_eur": 8460,
+          "net_annual_eur": 72156,
+          "payback_years": 1.86,
+          "npv_5y_eur": 153786
+        },
+        "8": {
+          "runs_per_year": 352,
+          "capex_eur": {
+            "flex_base": 22954,
+            "flex_pipettes_gripper_modules": 27600,
+            "idot": 55200,
+            "arm_cell": 0,
+            "centrifuge_incubator_reader_interfaces": 0
+          },
+          "capex_total_eur": 105754,
+          "one_off_effort_h": 560,
+          "one_off_effort_eur": 28560,
+          "one_off_total_eur": 134314,
+          "hands_on_hours_saved_per_year": 1302,
+          "labour_saving_eur": 110704,
+          "manual_failed_plates_per_year": 119.3,
+          "auto_failed_plates_per_year": 7.0,
+          "failure_saving_eur": 50530,
+          "service_eur": 8460,
+          "net_annual_eur": 152773,
+          "payback_years": 0.88,
+          "npv_5y_eur": 475665
+        },
+        "16": {
+          "runs_per_year": 704,
+          "capex_eur": {
+            "flex_base": 22954,
+            "flex_pipettes_gripper_modules": 27600,
+            "idot": 55200,
+            "arm_cell": 0,
+            "centrifuge_incubator_reader_interfaces": 0
+          },
+          "capex_total_eur": 105754,
+          "one_off_effort_h": 560,
+          "one_off_effort_eur": 28560,
+          "one_off_total_eur": 134314,
+          "hands_on_hours_saved_per_year": 2605,
+          "labour_saving_eur": 221408,
+          "manual_failed_plates_per_year": 238.7,
+          "auto_failed_plates_per_year": 14.1,
+          "failure_saving_eur": 101059,
+          "service_eur": 8460,
+          "net_annual_eur": 314007,
+          "payback_years": 0.43,
+          "npv_5y_eur": 1119424
+        }
+      }
+    }
+  },
+  "breakeven_runs_per_week_3y": 4.6,
+  "breakeven_runs_per_week_3y_high_cost": 7.0,
+  "placeholders": [
+    "automated.min_day3_loading",
+    "automated.min_monitoring_and_interventions_per_run",
+    "automated.min_review_of_package",
+    "automated.min_setup_and_loading",
+    "automated.residual_error_probability_per_run",
+    "economics.capex_usd.arm_cell",
+    "economics.capex_usd.centrifuge_incubator_reader_interfaces",
+    "economics.capex_usd.flex_pipettes_gripper_modules",
+    "economics.capex_usd.idot",
+    "economics.cost_of_a_failed_plate",
+    "economics.discount_rate",
+    "economics.labour_cost_per_hour",
+    "economics.one_off_effort_hours.integration_and_scheduling_software",
+    "economics.one_off_effort_hours.method_transfer_and_training",
+    "economics.one_off_effort_hours.validation_iq_oq_pq",
+    "economics.runs_per_week",
+    "economics.service_share_of_capex_per_year",
+    "economics.weeks_per_year",
+    "economics.years",
+    "fit_criteria.data_integrity_need",
+    "fit_criteria.method_stability",
+    "fit_criteria.technical_readiness",
+    "fit_criteria.throughput_growth",
+    "fx_usd_to_eur",
+    "manual.compound_dosing",
+    "manual.compound_volume_note",
+    "manual.day0_hands_on_share_of_window_breach_risk",
+    "manual.error_probability_per_manual_transfer",
+    "manual.min_cleanup_and_documentation",
+    "manual.min_idot_loading_and_start",
+    "manual.min_per_plate_handoff",
+    "manual.min_per_reservoir_refill",
+    "manual.min_reader_export_and_analysis",
+    "manual.min_setup_and_calculation",
+    "manual.reservoir_refills_per_liquid",
+    "manual.sec_per_cell_mix",
+    "manual.sec_per_compound_aspirate",
+    "manual.sec_per_compound_dispense",
+    "manual.sec_per_dilution_transfer",
+    "manual.sec_per_multichannel_aspirate",
+    "manual.sec_per_multichannel_dispense",
+    "variants.flex_and_idot_no_arm.effort_scale"
+  ]
+}

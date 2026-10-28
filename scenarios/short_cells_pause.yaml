@@ -1,0 +1,13 @@
+description: half the cell suspension is loaded, nobody answers for an hour, so the waiting cells age
+inventory:
+  reservoirs: {cells: {fraction: 0.5}}
+operator: {unavailable_codes: [E102], response_min: 0}
+then:
+  - {advance_min: 50}                           # still paused; the cell suspension keeps ageing
+  - respond: {actor: A.Operator, decision: retry}
+expect:
+  status: complete
+  faults: [E102]
+  deviations: [D040, D041, D050]
+  alerts: {D040: continue, D041: continue}
+  resumed_steps: [flex_cells]

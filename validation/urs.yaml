@@ -1,0 +1,92 @@
+# User Requirement Specification (URS) for the hts-orchestrator demo system.
+# Written from the user's point of view: what the system must do, not how.
+# Every requirement must be covered by at least one OQ test case (validation/oq.yaml);
+# `python -m htsorch qualify` fails if one is not.
+system: hts-orchestrator
+version: "0.1-demo"
+intended_use: >
+  Plan, check and run (in simulation) an unattended 384-well 3D spheroid compound screen with
+  iDOT, Opentrons Flex, a robot arm and a luminescence reader, and produce a traceable data package.
+  Simulated devices only; no GxP use.
+gamp_category: "5 (custom application), risk-based approach"
+requirements:
+  - id: URS-01
+    priority: must
+    title: "Experiment spec is checked before any run"
+    text: "A spec that cannot work (DMSO not below 0.1%, an iDOT dispense below its 20 nL minimum, volumes above plate capacity, too many conditions, volumes outside pipette range, not enough tips, liquid or source volume) is blocked with a message that says what, where and who must act."
+  - id: URS-02
+    priority: must
+    title: "Time windows are predicted before the run and enforced during it"
+    text: "The system predicts compound-to-cells wait, cell age, reagent lag and incubation time before the run, and during the run asks a person before a window would be broken."
+  - id: URS-03
+    priority: must
+    title: "Plate map is complete, unique and balanced"
+    text: "Every condition has its replicates, no well is used twice, edge wells follow the chosen policy and controls are spread over the plate."
+  - id: URS-04
+    priority: should
+    title: "Plate map is reproducible"
+    text: "The same spec and seed give the same plate map and the same instrument files."
+  - id: URS-05
+    priority: must
+    title: "Instrument programs are generated and proven loadable"
+    text: "Generated Opentrons protocols compile and pass the vendor simulator; the iDOT worklist matches the plate map."
+  - id: URS-06
+    priority: must
+    title: "Assay chemistry limits are respected"
+    text: "Shake time and lysis incubation meet the CellTiter-Glo 3D minimums, or the spec is blocked."
+  - id: URS-07
+    priority: must
+    title: "A plate is always in exactly one known place"
+    text: "Plate locations respect station capacity, the arm holds one plate, steps happen in order and at the right station, and every refusal is logged with a code."
+  - id: URS-08
+    priority: must
+    title: "A lost plate never goes unnoticed"
+    text: "If a plate is lost in transit nothing continues until a named person confirms where it is; the plate stays flagged for good."
+  - id: URS-09
+    priority: should
+    title: "Plates can be quarantined and released only by a person"
+    text: "A quarantined plate is frozen; only a named person releases it; every step is flagged."
+  - id: URS-10
+    priority: must
+    title: "Faults are handled by policy"
+    text: "Brief device faults are retried a limited number of times by the system; faults that need hands (tips, liquid, source well, lost plate, balance plate, excursion) stop the run for a person; a fix that does not hold cannot loop forever."
+  - id: URS-11
+    priority: must
+    title: "Half-done steps resume without repeating work"
+    text: "After a shortage a step resumes with only the missing tips, liquid or wells; nothing is dosed twice."
+  - id: URS-12
+    priority: must
+    title: "The 72 h wait survives a restart and cannot be tampered with"
+    text: "The run is saved with a wake-up time; resuming checks the event chain, the custody log and the spec hash, and refuses a changed spec or edited state."
+  - id: URS-13
+    priority: must
+    title: "The audit trail is attributable, ordered and tamper-evident"
+    text: "Every event and custody action carries who, what and when (simulated time) and is hash-chained; an edit is detected."
+  - id: URS-14
+    priority: must
+    title: "Deviations are recorded where the data are"
+    text: "Window breaches, a person's intervention, uncertain custody and an incubator excursion become coded deviations that flag the affected wells in the data package."
+  - id: URS-15
+    priority: must
+    title: "The data package is complete and verifiable"
+    text: "The package carries identity, protocol hashes, instrument states, pre-flight warnings and per-well flags, marks simulated data as simulated, keeps simulation truth out of the record and fails verification if a file is changed."
+  - id: URS-16
+    priority: should
+    title: "Results are exported in AnIML"
+    text: "An AnIML document is validated against the schema, matches the raw data and the protocol hash, and the package is not issued if the export is invalid when AnIML is required."
+  - id: URS-17
+    priority: should
+    title: "Analysis is checked against known truth"
+    text: "IC50 recovery is tested against known values and a poor plate fails the Z' check."
+  - id: URS-18
+    priority: must
+    title: "Wrong data cannot enter by accident"
+    text: "A reader export for another plate is rejected; a barcode mismatch stops the run for a decision."
+  - id: URS-19
+    priority: must
+    title: "Run outcomes are unambiguous for automation"
+    text: "The command line returns 0 for complete, 2 for waiting or paused and 3 for aborted; a paused or aborted run writes no package."
+  - id: URS-20
+    priority: should
+    title: "Failure behaviour is regression-tested"
+    text: "Each failure scenario carries its expected outcome and is checked automatically, together with run-wide invariants."

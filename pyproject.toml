@@ -1,0 +1,13 @@
+[project]
+name = "hts-orchestrator"
+version = "0.1.0"
+description = "Spec-to-protocol platform for an automated HTS workflow (iDOT + Opentrons Flex), simulation only"
+requires-python = ">=3.10"
+dependencies = ["pyyaml", "numpy", "scipy>=1.14,<1.15", "lxml"]
+
+[project.optional-dependencies]
+dev = ["pytest", "opentrons"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

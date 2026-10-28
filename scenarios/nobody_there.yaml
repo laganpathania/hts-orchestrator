@@ -1,0 +1,11 @@
+description: the plate is lost and no operator is available; the run pauses until someone responds
+faults:
+  - {device: arm, command: move, code: E302, at: 5}
+operator: {available: false}
+expect:
+  status: paused
+  faults: [E302]
+  paused_reason_contains: no operator available
+  plate_flags: {ASSAY-0001: [C001]}             # lost, not yet found: no C002
+  events_include: [paused]
+  events_absent: [centrifuge]

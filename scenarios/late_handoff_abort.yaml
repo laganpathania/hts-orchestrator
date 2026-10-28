@@ -1,0 +1,8 @@
+description: a 50 minute handoff delay would break the compound-to-cells window; the operator aborts
+delays: {compound_wait_min: 50}
+operator: {window_breach: abort}
+expect:
+  status: aborted
+  alerts: {D040: abort}
+  events_absent: [flex_media, flex_cells]       # aborted before any cells were dispensed
+  plate_flags: {ASSAY-0001: [Q001], PREP-0001: [Q001]}

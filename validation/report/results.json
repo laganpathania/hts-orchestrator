@@ -1,0 +1,827 @@
+{
+  "verdict": "PASS",
+  "problems": [],
+  "environment": {
+    "python": "3.13.16",
+    "platform": "Linux-6.18.44-fc-v153-x86_64-with-glibc2.39",
+    "packages": {
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "lxml": "6.1.3",
+      "yaml": "6.0.3",
+      "opentrons": "10.1.0",
+      "pytest": "9.1.1"
+    },
+    "spec_sha256": "0d2f9e321060abf61d534a97aea66749a0363453aa9a0872fc1d00faacf12dc6",
+    "code_and_documents_sha256": "179f75f76626ffa12e7edf1638db713bed77abb24b4c73bcf0c3f6338b1504a7",
+    "executed_at": "2026-10-26T15:50:26+00:00"
+  },
+  "cases": [
+    {
+      "id": "OQ-01",
+      "title": "Spec limits block an unworkable experiment",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_valid_spec_has_no_errors_and_one_dmso_warning",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_dmso_above_limit_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_well_volume_over_plate_limit_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_too_many_conditions_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_pipette_range_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_reagent_reservoir_too_small_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_not_enough_tips_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_idot_dead_volume_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_master_stock_shortage_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_oq_codes.py::test_V012_too_many_dilution_columns",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-02",
+      "title": "Findings say what, where and who",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_every_finding_says_what_did_and_who",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-03",
+      "title": "Time windows are predicted before the run",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_timing_window_blocks_when_cells_age_out",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_oq_codes.py::test_V042_reagent_lag_window",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_pbs_fill_one_channel_seeding_blows_cell_hold_window",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_measured_windows_equal_the_validators_predictions",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-04",
+      "title": "Windows are enforced during the run",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_engine.py::test_a_window_that_cannot_be_met_is_caught_before_cells_are_committed",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_continuing_past_a_predicted_breach_is_recorded_as_a_decision_and_a_deviation",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_with_nobody_there_a_predicted_breach_pauses_the_run_for_a_decision",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_late_wake_within_tolerance_is_fine_and_beyond_it_is_a_deviation",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:late_handoff_abort",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:short_cells_pause",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:short_reagent",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:late_wake_within_tolerance",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:late_wake_beyond_tolerance",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-05",
+      "title": "Plate map completeness and balance",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_plate_map_counts_and_unique_wells",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_every_condition_has_three_replicates",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_controls_are_stratified_between_edge_and_interior",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_unknown_edge_policy_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_controls_policy_puts_only_controls_on_perimeter",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_controls_policy_warns_when_fewer_controls_than_perimeter",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_pbs_fill_map_and_worklist",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_pbs_volume_mismatch_warns",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_oq_codes.py::test_V050_duplicate_well_in_plate_map",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_oq_codes.py::test_V052_edge_policy_violated_by_the_plate_map",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-06",
+      "title": "Plate map and files are reproducible",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_plate_map_is_deterministic_and_seed_dependent",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-07",
+      "title": "Instrument programs load and match the plan",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_idot_worklist_is_complete_and_constant_volume",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_worklist_sources_match_plate_map",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_generated_protocols_compile",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_generated_protocols_pass_opentrons_simulate",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_seeding_simulation_dispenses_every_well_once_per_liquid",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_pbs_fill_protocols_simulate_and_skip_pbs_wells",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-08",
+      "title": "Lysis chemistry limits",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_platform.py::test_default_spec_passes_lysis_check",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_short_shake_or_incubation_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_missing_lysis_parameter_blocks",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_platform.py::test_readout_protocol_states_shake_and_incubation",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-09",
+      "title": "Plate custody rules",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_oq_codes.py::test_custody_refusal_code_is_raised_and_logged",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_station_capacity_is_enforced",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_gripper_holds_one_plate_and_a_plate_in_the_gripper_cannot_be_processed",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_a_prep_plate_cannot_enter_the_incubator_or_reader",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_a_step_must_happen_at_its_station_and_in_order",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_refusals_are_logged_and_change_nothing",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_no_sequence_of_requests_can_break_the_invariants",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_guided_random_walks_reach_deep_states_and_keep_the_invariants",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-10",
+      "title": "Lost plate",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_custody.py::test_plate_lost_in_transit_blocks_everything_until_a_person_confirms_where_it_is",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_a_lost_plate_is_found_by_a_person_and_flagged_for_good",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:lost_plate",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:nobody_there",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:nobody_there_then_found",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-11",
+      "title": "Quarantine and release",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_custody.py::test_quarantined_plates_are_frozen_until_a_person_releases_them",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_only_quarantined_or_complete_plates_can_be_discarded_and_only_at_the_discard_station",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-12",
+      "title": "Device fault model",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_devices.py::test_injected_fault_fires_on_the_nth_call_then_a_retry_succeeds",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_device_in_error_refuses_commands_until_recovered",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_system_may_clear_transient_faults_but_not_operator_faults",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_a_fault_costs_simulated_time",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_centrifuge_refuses_without_a_balance_plate_and_reader_refuses_the_wrong_plate",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_transient_faults_are_retried_without_a_person",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_a_stalled_shaker_restarts_the_full_shake_never_a_shortened_one",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:transient_faults",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-13",
+      "title": "Retries and fixes are limited",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_engine.py::test_retries_are_limited_and_then_a_person_decides",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_a_fix_that_does_not_hold_cannot_loop_forever",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_policy_table_can_be_changed_per_fault",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:stuck_arm",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-14",
+      "title": "Shortages and resuming half-done steps",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_devices.py::test_flex_runs_out_of_tips_partway_and_recovers_after_a_reload",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_flex_liquid_stops_at_the_dead_volume",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_idot_dispenses_what_it_can_then_reports_the_short_wells",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_running_out_of_tips_mid_protocol_is_fixed_by_a_person_and_resumed",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_a_short_reagent_load_delays_only_the_wells_served_after_the_refill",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_idot_source_shortage_dispenses_the_rest_without_dosing_anything_twice",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:low_tips",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:short_reagent",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:idot_source_short",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-15",
+      "title": "Incubator excursion",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_devices.py::test_incubator_excursion_is_an_operator_fault_with_environment_risk",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_incubator_excursion_is_acknowledged_flagged_and_the_run_continues",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:incubator_excursion",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-16",
+      "title": "Wrong plate at the reader",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_engine.py::test_wrong_plate_in_the_reader_stops_for_a_decision",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_reader_export_for_another_plate_is_rejected",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:wrong_plate_abort",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-17",
+      "title": "Persistence across the 72 h wait",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_engine.py::test_nominal_run_waits_at_the_incubation_then_completes",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_the_run_can_be_continued_by_a_new_process_from_the_state_file",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_waiting_run_does_not_proceed_before_the_wake_time",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_state_file_tampering_and_spec_changes_are_refused",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_run_cannot_be_started_twice_and_incomplete_runs_have_no_record",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_incubation_time_survives_a_restart",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_devices.py::test_every_device_state_round_trips_through_json",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_custody.py::test_custody_survives_a_json_round_trip",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "scenario:stops_at_incubation",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-18",
+      "title": "Audit trail integrity",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_custody.py::test_history_tampering_and_state_drift_are_detected",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_tampering_with_events_or_data_is_detected",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_a_faulted_run_still_produces_a_verifiable_package_with_audit_trail",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-19",
+      "title": "Data package content",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_package.py::test_package_verifies_and_has_identity",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_protocol_hashes_match_the_included_files",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_timestamps_are_iso_and_incubation_is_72h",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_instrument_states_are_recorded_and_marked_simulated",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_preflight_warnings_travel_with_every_well",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_baseline_has_no_runtime_deviations",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_handoff_delay_and_overrun_become_flags",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_partial_delay_flags_only_the_late_wells",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_data_dictionary_matches_wells_csv",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_simulation_truth_is_kept_out_of_the_main_record",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_pbs_fill_package_has_blank_wells_and_edge_protocol",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-20",
+      "title": "AnIML export",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_animl.py::test_export_is_validated_and_listed_in_the_package",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_raw_values_match_the_reader_export",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_technique_hash_in_document_matches_the_file",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_flags_travel_into_the_animl_document",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_schema_rejects_a_missing_required_attribute",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_invalid_export_aborts_and_leaves_no_package",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_animl.py::test_require_mode_fails_and_leaves_no_package",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-21",
+      "title": "Analysis against known truth",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_package.py::test_ic50_recovery_against_known_truth",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_package.py::test_poor_plate_fails_z_prime",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-22",
+      "title": "Command line outcomes",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_engine.py::test_cli_pauses_without_a_package_and_resume_finishes_it",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_cli_stops_at_the_wait_and_a_later_resume_completes",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_engine.py::test_cli_aborted_run_returns_3_and_writes_no_package",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_cli_scenarios_exits_0_when_all_behave_and_1_when_one_does_not",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "OQ-23",
+      "title": "Scenario runner catches wrong behaviour",
+      "status": "pass",
+      "tests": [
+        {
+          "ref": "pytest:test_scenarios.py::test_wrong_status_is_caught",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_wrong_deviation_set_is_caught",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_the_runner_notices_double_dosing",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_the_runner_notices_custody_damage",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_an_unanswered_fault_and_a_tampered_state_file_are_flagged",
+          "result": "pass",
+          "detail": ""
+        },
+        {
+          "ref": "pytest:test_scenarios.py::test_a_scenario_without_expectations_or_with_a_bad_file_fails",
+          "result": "pass",
+          "detail": ""
+        }
+      ]
+    }
+  ]
+}

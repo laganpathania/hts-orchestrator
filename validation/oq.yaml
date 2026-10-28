@@ -1,0 +1,299 @@
+# Operational Qualification (OQ) protocol: each case says what is challenged, which requirement and risk it
+# covers, which codes it provokes, how it is run and what counts as a pass.
+# `tests:` entries are either  pytest:<file>::<test name>  (all parameter variants must pass)
+#                       or     scenario:<name>              (scenarios/<name>.yaml run through the scenario runner).
+# `codes:` lists the V-, E-, K-, D-, C- and Q-codes the case provokes (a code with no case is reported as a gap).
+cases:
+  - id: OQ-01
+    title: Spec limits block an unworkable experiment
+    urs: [URS-01]
+    risks: [R-01, R-09, R-10]
+    codes: [V001, V002, V003, V010, V011, V012, V020, V021, V030, V060]
+    tests:
+      - pytest:test_platform.py::test_valid_spec_has_no_errors_and_one_dmso_warning
+      - pytest:test_platform.py::test_dmso_above_limit_blocks
+      - pytest:test_platform.py::test_dmso_exactly_at_the_limit_blocks
+      - pytest:test_platform.py::test_idot_volume_below_the_minimum_blocks
+      - pytest:test_platform.py::test_stock_factor_below_final_factor_makes_the_volume_vary
+      - pytest:test_platform.py::test_well_volume_over_plate_limit_blocks
+      - pytest:test_platform.py::test_too_many_conditions_blocks
+      - pytest:test_platform.py::test_pipette_range_blocks
+      - pytest:test_platform.py::test_reagent_reservoir_too_small_blocks
+      - pytest:test_platform.py::test_not_enough_tips_blocks
+      - pytest:test_platform.py::test_idot_dead_volume_blocks
+      - pytest:test_platform.py::test_master_stock_shortage_blocks
+      - pytest:test_oq_codes.py::test_V012_too_many_dilution_columns
+    accept: Each bad spec is blocked with the named V-code at level ERROR; the valid spec has no ERROR.
+  - id: OQ-02
+    title: Findings say what, where and who
+    urs: [URS-01]
+    risks: []
+    codes: []
+    tests:
+      - pytest:test_platform.py::test_every_finding_says_what_did_and_who
+    accept: Every finding carries a message, the affected item and the person or role that must act.
+  - id: OQ-03
+    title: Time windows are predicted before the run
+    urs: [URS-02]
+    risks: [R-04, R-05]
+    codes: [V040, V041, V042, V043, V045]
+    tests:
+      - pytest:test_platform.py::test_timing_window_blocks_when_cells_age_out
+      - pytest:test_oq_codes.py::test_V042_reagent_lag_window
+      - pytest:test_platform.py::test_pbs_fill_one_channel_seeding_blows_cell_hold_window
+      - pytest:test_engine.py::test_measured_windows_equal_the_validators_predictions
+    accept: A breach is blocked before the run; the measured windows of a nominal run equal the predictions.
+  - id: OQ-04
+    title: Windows are enforced during the run
+    urs: [URS-02, URS-14]
+    risks: [R-04, R-05]
+    codes: [D040, D041, D042, D043]
+    tests:
+      - pytest:test_engine.py::test_a_window_that_cannot_be_met_is_caught_before_cells_are_committed
+      - pytest:test_engine.py::test_continuing_past_a_predicted_breach_is_recorded_as_a_decision_and_a_deviation
+      - pytest:test_engine.py::test_with_nobody_there_a_predicted_breach_pauses_the_run_for_a_decision
+      - pytest:test_engine.py::test_late_wake_within_tolerance_is_fine_and_beyond_it_is_a_deviation
+      - scenario:late_handoff_abort
+      - scenario:short_cells_pause
+      - scenario:short_reagent
+      - scenario:late_wake_within_tolerance
+      - scenario:late_wake_beyond_tolerance
+    accept: A predicted breach asks a person first; a decision to continue becomes D040-D042 on the affected wells only; a late wake beyond tolerance is D043.
+  - id: OQ-05
+    title: Plate map completeness and balance
+    urs: [URS-03]
+    risks: [R-08]
+    codes: [V013, V014, V050, V051, V052]
+    tests:
+      - pytest:test_platform.py::test_plate_map_counts_and_unique_wells
+      - pytest:test_platform.py::test_every_condition_has_three_replicates
+      - pytest:test_platform.py::test_controls_are_stratified_between_edge_and_interior
+      - pytest:test_platform.py::test_unknown_edge_policy_blocks
+      - pytest:test_platform.py::test_controls_policy_puts_only_controls_on_perimeter
+      - pytest:test_platform.py::test_controls_policy_warns_when_fewer_controls_than_perimeter
+      - pytest:test_platform.py::test_pbs_fill_map_and_worklist
+      - pytest:test_platform.py::test_pbs_volume_mismatch_warns
+      - pytest:test_oq_codes.py::test_V050_duplicate_well_in_plate_map
+      - pytest:test_oq_codes.py::test_V052_edge_policy_violated_by_the_plate_map
+    accept: Counts, uniqueness and edge policy hold; a damaged plate map is blocked by V050 or V052.
+  - id: OQ-06
+    title: Plate map and files are reproducible
+    urs: [URS-04]
+    risks: [R-17]
+    codes: []
+    tests:
+      - pytest:test_platform.py::test_plate_map_is_deterministic_and_seed_dependent
+    accept: Same seed gives the same map; another seed gives a different map.
+  - id: OQ-07
+    title: Instrument programs load and match the plan
+    urs: [URS-05]
+    risks: [R-17]
+    codes: []
+    tests:
+      - pytest:test_platform.py::test_idot_worklist_is_complete_and_constant_volume_for_the_shipped_spec
+      - pytest:test_platform.py::test_worklist_sources_match_plate_map
+      - pytest:test_platform.py::test_generated_protocols_compile
+      - pytest:test_platform.py::test_generated_protocols_pass_opentrons_simulate
+      - pytest:test_platform.py::test_seeding_simulation_dispenses_every_well_once_per_liquid
+      - pytest:test_platform.py::test_pbs_fill_protocols_simulate_and_skip_pbs_wells
+    accept: Protocols compile and simulate; every well gets each liquid once; worklist sources match the plate map.
+  - id: OQ-08
+    title: Lysis chemistry limits
+    urs: [URS-06]
+    risks: [R-07]
+    codes: [V044]
+    tests:
+      - pytest:test_platform.py::test_default_spec_passes_lysis_check
+      - pytest:test_platform.py::test_short_shake_or_incubation_blocks
+      - pytest:test_platform.py::test_missing_lysis_parameter_blocks
+      - pytest:test_platform.py::test_readout_protocol_states_shake_and_incubation
+    accept: A short or missing shake or incubation is blocked; the readout protocol states the required values.
+  - id: OQ-09
+    title: Plate custody rules
+    urs: [URS-07]
+    risks: [R-02, R-03, R-18]
+    codes: [K001, K003, K004, K005, K006, K007, K008, K009, K010, K011, K012, K013, K014, K015]
+    tests:
+      - pytest:test_oq_codes.py::test_custody_refusal_code_is_raised_and_logged
+      - pytest:test_custody.py::test_station_capacity_is_enforced
+      - pytest:test_custody.py::test_gripper_holds_one_plate_and_a_plate_in_the_gripper_cannot_be_processed
+      - pytest:test_custody.py::test_a_prep_plate_cannot_enter_the_incubator_or_reader
+      - pytest:test_custody.py::test_a_step_must_happen_at_its_station_and_in_order
+      - pytest:test_custody.py::test_refusals_are_logged_and_change_nothing
+      - pytest:test_custody.py::test_no_sequence_of_requests_can_break_the_invariants
+      - pytest:test_custody.py::test_guided_random_walks_reach_deep_states_and_keep_the_invariants
+    accept: Every refusal code is raised by its own challenge, logged, and changes nothing; random request sequences never break the invariants.
+  - id: OQ-10
+    title: Lost plate
+    urs: [URS-08]
+    risks: [R-02]
+    codes: [E302, C001, C002, D051, K009]
+    tests:
+      - pytest:test_custody.py::test_plate_lost_in_transit_blocks_everything_until_a_person_confirms_where_it_is
+      - pytest:test_engine.py::test_a_lost_plate_is_found_by_a_person_and_flagged_for_good
+      - scenario:lost_plate
+      - scenario:nobody_there
+      - scenario:nobody_there_then_found
+    accept: Nothing moves until a named person confirms the location; flags C001 and C002 stay; D050 and D051 appear in the record; with nobody there the run pauses.
+  - id: OQ-11
+    title: Quarantine and release
+    urs: [URS-09]
+    risks: [R-18]
+    codes: [Q001, Q002, K008, K009]
+    tests:
+      - pytest:test_custody.py::test_quarantined_plates_are_frozen_until_a_person_releases_them
+      - pytest:test_custody.py::test_only_quarantined_or_complete_plates_can_be_discarded_and_only_at_the_discard_station
+    accept: A quarantined plate cannot be processed; only a named person releases it; Q001 and Q002 are recorded.
+  - id: OQ-12
+    title: Device fault model
+    urs: [URS-10]
+    risks: [R-01, R-07, R-15]
+    codes: [E001, E103, E201, E301, E402, E501, E601, E701]
+    tests:
+      - pytest:test_devices.py::test_injected_fault_fires_on_the_nth_call_then_a_retry_succeeds
+      - pytest:test_devices.py::test_device_in_error_refuses_commands_until_recovered
+      - pytest:test_devices.py::test_system_may_clear_transient_faults_but_not_operator_faults
+      - pytest:test_devices.py::test_a_fault_costs_simulated_time
+      - pytest:test_devices.py::test_centrifuge_refuses_without_a_balance_plate_and_reader_refuses_the_wrong_plate
+      - pytest:test_engine.py::test_transient_faults_are_retried_without_a_person
+      - pytest:test_engine.py::test_a_stalled_shaker_restarts_the_full_shake_never_a_shortened_one
+      - scenario:transient_faults
+    accept: A transient fault is retried by the system; an operator fault is not; time is lost for each fault; a stalled shake restarts in full.
+  - id: OQ-13
+    title: Retries and fixes are limited
+    urs: [URS-10]
+    risks: [R-15, R-13]
+    codes: [D050]
+    tests:
+      - pytest:test_engine.py::test_retries_are_limited_and_then_a_person_decides
+      - pytest:test_engine.py::test_a_fix_that_does_not_hold_cannot_loop_forever
+      - pytest:test_engine.py::test_policy_table_can_be_changed_per_fault
+      - scenario:stuck_arm
+    accept: After the limit the run stops for a person; the recovery table can be changed per fault.
+  - id: OQ-14
+    title: Shortages and resuming half-done steps
+    urs: [URS-10, URS-11, URS-01]
+    risks: [R-01, R-10]
+    codes: [E101, E102, E202]
+    tests:
+      - pytest:test_devices.py::test_flex_runs_out_of_tips_partway_and_recovers_after_a_reload
+      - pytest:test_devices.py::test_flex_liquid_stops_at_the_dead_volume
+      - pytest:test_devices.py::test_idot_dispenses_what_it_can_then_reports_the_short_wells
+      - pytest:test_engine.py::test_running_out_of_tips_mid_protocol_is_fixed_by_a_person_and_resumed
+      - pytest:test_engine.py::test_a_short_reagent_load_delays_only_the_wells_served_after_the_refill
+      - pytest:test_engine.py::test_idot_source_shortage_dispenses_the_rest_without_dosing_anything_twice
+      - scenario:low_tips
+      - scenario:short_reagent
+      - scenario:idot_source_short
+    accept: The shortage raises its code; a person fixes it; the step resumes with only what is missing; no well is dosed twice.
+  - id: OQ-15
+    title: Incubator excursion
+    urs: [URS-10, URS-14]
+    risks: [R-06]
+    codes: [E401, D052]
+    tests:
+      - pytest:test_devices.py::test_incubator_excursion_is_an_operator_fault_with_environment_risk
+      - pytest:test_engine.py::test_incubator_excursion_is_acknowledged_flagged_and_the_run_continues
+      - scenario:incubator_excursion
+    accept: An excursion needs a person, flags the plate and records D052.
+  - id: OQ-16
+    title: Wrong plate at the reader
+    urs: [URS-18]
+    risks: [R-14]
+    codes: [E602]
+    tests:
+      - pytest:test_engine.py::test_wrong_plate_in_the_reader_stops_for_a_decision
+      - pytest:test_package.py::test_reader_export_for_another_plate_is_rejected
+      - scenario:wrong_plate_abort
+    accept: A barcode mismatch stops the run; a reader file for another plate is rejected on import.
+  - id: OQ-17
+    title: Persistence across the 72 h wait
+    urs: [URS-12]
+    risks: [R-11]
+    codes: []
+    tests:
+      - pytest:test_engine.py::test_nominal_run_waits_at_the_incubation_then_completes
+      - pytest:test_engine.py::test_the_run_can_be_continued_by_a_new_process_from_the_state_file
+      - pytest:test_engine.py::test_waiting_run_does_not_proceed_before_the_wake_time
+      - pytest:test_engine.py::test_state_file_tampering_and_spec_changes_are_refused
+      - pytest:test_engine.py::test_run_cannot_be_started_twice_and_incomplete_runs_have_no_record
+      - pytest:test_devices.py::test_incubation_time_survives_a_restart
+      - pytest:test_devices.py::test_every_device_state_round_trips_through_json
+      - pytest:test_custody.py::test_custody_survives_a_json_round_trip
+      - scenario:stops_at_incubation
+    accept: A new process continues exactly where the old one stopped; an edited state or changed spec is refused.
+  - id: OQ-18
+    title: Audit trail integrity
+    urs: [URS-13]
+    risks: [R-11, R-12]
+    codes: []
+    tests:
+      - pytest:test_custody.py::test_history_tampering_and_state_drift_are_detected
+      - pytest:test_package.py::test_tampering_with_events_or_data_is_detected
+      - pytest:test_engine.py::test_a_faulted_run_still_produces_a_verifiable_package_with_audit_trail
+    accept: Any edit to the event log, custody log or data is detected by verification.
+  - id: OQ-19
+    title: Data package content
+    urs: [URS-14, URS-15]
+    risks: [R-12, R-16, R-17]
+    codes: []
+    tests:
+      - pytest:test_package.py::test_package_verifies_and_has_identity
+      - pytest:test_package.py::test_protocol_hashes_match_the_included_files
+      - pytest:test_package.py::test_timestamps_are_iso_and_incubation_is_72h
+      - pytest:test_package.py::test_instrument_states_are_recorded_and_marked_simulated
+      - pytest:test_package.py::test_preflight_warnings_travel_with_every_well
+      - pytest:test_package.py::test_baseline_has_no_runtime_deviations
+      - pytest:test_package.py::test_handoff_delay_and_overrun_become_flags
+      - pytest:test_package.py::test_partial_delay_flags_only_the_late_wells
+      - pytest:test_package.py::test_data_dictionary_matches_wells_csv
+      - pytest:test_package.py::test_simulation_truth_is_kept_out_of_the_main_record
+      - pytest:test_package.py::test_pbs_fill_package_has_blank_wells_and_edge_protocol
+    accept: The package is complete, simulated data are marked, deviations flag only the affected wells, and verification passes.
+  - id: OQ-20
+    title: AnIML export
+    urs: [URS-16]
+    risks: [R-12]
+    codes: []
+    tests:
+      - pytest:test_animl.py::test_export_is_validated_and_listed_in_the_package
+      - pytest:test_animl.py::test_raw_values_match_the_reader_export
+      - pytest:test_animl.py::test_technique_hash_in_document_matches_the_file
+      - pytest:test_animl.py::test_flags_travel_into_the_animl_document
+      - pytest:test_animl.py::test_schema_rejects_a_missing_required_attribute
+      - pytest:test_animl.py::test_invalid_export_aborts_and_leaves_no_package
+      - pytest:test_animl.py::test_require_mode_fails_and_leaves_no_package
+    accept: The AnIML file validates, matches the raw data, carries the flags, and an invalid export stops the package when AnIML is required.
+  - id: OQ-21
+    title: Analysis against known truth
+    urs: [URS-17]
+    risks: []
+    codes: []
+    tests:
+      - pytest:test_package.py::test_ic50_recovery_against_known_truth
+      - pytest:test_package.py::test_poor_plate_fails_z_prime
+    accept: Known IC50 values are recovered within tolerance; a poor plate fails the Z' check.
+  - id: OQ-22
+    title: Command line outcomes
+    urs: [URS-19]
+    risks: [R-13]
+    codes: []
+    tests:
+      - pytest:test_engine.py::test_cli_pauses_without_a_package_and_resume_finishes_it
+      - pytest:test_engine.py::test_cli_stops_at_the_wait_and_a_later_resume_completes
+      - pytest:test_engine.py::test_cli_aborted_run_returns_3_and_writes_no_package
+      - pytest:test_scenarios.py::test_cli_scenarios_exits_0_when_all_behave_and_1_when_one_does_not
+    accept: Exit codes are 0, 2 and 3 as specified; a paused or aborted run writes no package.
+  - id: OQ-23
+    title: Scenario runner catches wrong behaviour
+    urs: [URS-20]
+    risks: [R-01, R-02]
+    codes: []
+    tests:
+      - pytest:test_scenarios.py::test_wrong_status_is_caught
+      - pytest:test_scenarios.py::test_wrong_deviation_set_is_caught
+      - pytest:test_scenarios.py::test_the_runner_notices_double_dosing
+      - pytest:test_scenarios.py::test_the_runner_notices_custody_damage
+      - pytest:test_scenarios.py::test_an_unanswered_fault_and_a_tampered_state_file_are_flagged
+      - pytest:test_scenarios.py::test_a_scenario_without_expectations_or_with_a_bad_file_fails
+    accept: A wrong expectation or a broken engine makes the scenario fail; a scenario with no expectation is rejected.

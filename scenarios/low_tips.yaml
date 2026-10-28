@@ -1,0 +1,10 @@
+description: the dilution tip rack is nearly empty (10 of the 22 tips needed); the operator reloads and the step resumes
+inventory:
+  tips: {dilution: 10}
+expect:
+  status: complete
+  faults: [E101]
+  deviations: [D050]
+  interventions: 1
+  resumed_steps: [flex_dilution_series]         # the rest of the step ran after the reload
+  events_include: [operator_action]

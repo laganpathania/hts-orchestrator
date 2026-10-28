@@ -1,0 +1,9 @@
+description: one iDOT source well has too little compound; the operator tops it up and only the missing nL are dispensed
+inventory:
+  idot_sources: {A1: {usable_ul: 0.05}}         # A1 needs 0.09 uL (3 replicates x 30 nL)
+expect:
+  status: complete
+  faults: [E202]
+  deviations: [D050]
+  interventions: 1
+  resumed_steps: [idot_dispense]                # the runner also checks that nothing was dosed twice

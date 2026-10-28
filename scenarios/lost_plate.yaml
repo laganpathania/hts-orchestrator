@@ -1,0 +1,12 @@
+description: the assay plate is lost on its way to the centrifuge and found by the operator
+# at: 5 = the fifth arm move (assay plate to the centrifuge) with the main spec
+faults:
+  - {device: arm, command: move, code: E302, at: 5}
+operator: {response_min: 20, plate_found_at: source}
+expect:
+  status: complete
+  faults: [E302]
+  deviations: [D050, D051]
+  interventions: 1
+  plate_flags: {ASSAY-0001: [C001, C002], PREP-0001: []}   # the flags stay with the plate for good
+  events_include: [operator_action]

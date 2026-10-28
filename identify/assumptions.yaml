@@ -1,0 +1,85 @@
+# Assumptions for the "Identify" model (manual baseline, automation fit, ROI).
+# Every number carries a `basis`:
+#   source        - taken from a cited public page (url given)
+#   spec          - computed from the experiment spec (specs/ctg3d_screen.yaml)
+#   placeholder   - the author's estimate; REPLACE with a stopwatch measurement, a quote or the site's own data
+# Nothing marked placeholder is a fact. The write-up reports which conclusions survive when they change.
+currency: EUR
+fx_usd_to_eur: {value: 0.92, basis: placeholder, note: "check the day's rate"}
+
+manual:                                   # seconds or minutes per operation, one analyst at the bench
+  randomized_layout: {value: true, basis: spec, note: "plate map is seeded-random, so compounds go to scattered wells: single-channel work"}
+  sec_per_dilution_transfer: {value: 30, basis: placeholder, note: "aspirate, dispense, mix, tip change"}
+  sec_per_compound_aspirate: {value: 20, basis: placeholder, note: "once per source well (102): pick up the compound with a repeater or multi-dispense pipette, tip change"}
+  sec_per_compound_dispense: {value: 10, basis: placeholder, note: "one dispense into one scattered well of the randomised plate map; the repeater re-uses the aspirated volume for the replicates and controls"}
+  compound_volume_note: {value: "not modelled", basis: placeholder, note: "the spec doses 30 nL, which a hand pipette cannot do; a manual run would need an intermediate dilution or larger volume, which adds time not counted here"}
+  sec_per_multichannel_aspirate: {value: 6, basis: placeholder, note: "8-channel aspiration from the reservoir, tip handling"}
+  sec_per_multichannel_dispense: {value: 8, basis: placeholder, note: "one 8-channel dispense into a column position (multi-dispense: one aspiration serves 2 dispenses of 20 uL with a 50 uL pipette, as in the Flex protocols)"}
+  sec_per_cell_mix: {value: 10, basis: placeholder, note: "re-suspend the cell reservoir every mix_cell_every_cycles aspirations (spec)"}
+  min_idot_loading_and_start: {value: 10, basis: placeholder, note: "compound dosing is done by the iDOT in every variant (30 nL cannot be pipetted); this is the operator's part: place source and target plates, start, remove. The 10-15 min run itself is unattended (spec timing.idot_dispense_min)"}
+  reservoir_refills_per_liquid: {value: 2, basis: placeholder}
+  min_per_reservoir_refill: {value: 3, basis: placeholder}
+  min_setup_and_calculation: {value: 45, basis: placeholder, note: "dilution scheme, plate map layout, labels, reagent thaw"}
+  min_per_plate_handoff: {value: 2, basis: placeholder, note: "carry to centrifuge, incubator, shaker, reader"}
+  compound_dosing: {value: hand, basis: placeholder, note: "the comparison chosen by the user: everything by hand. hand = repeater pipette, one aspiration per source well and one dispense per well (it cannot really reach 30 nL; a manual run would need an intermediate dilution, not counted). idot = reference where the iDOT doses and people do the rest"}
+  handoffs_per_assay_plate: {value: 7, basis: spec, note: "arm moves in the workflow: deck, idot, deck, centrifuge, incubator, deck, reader"}
+  min_cleanup_and_documentation: {value: 40, basis: placeholder, note: "waste, notebook entry, transcription of deviations"}
+  min_reader_export_and_analysis: {value: 40, basis: placeholder, note: "export, copy to analysis sheet, QC, curve fits"}
+  error_probability_per_manual_transfer: {value: 0.0005, basis: placeholder, note: "illustrative; replace with the lab's own deviation records"}
+  day0_hands_on_share_of_window_breach_risk: {value: 1.0, basis: placeholder}
+
+automated:                                # hands-on minutes with the system
+  min_setup_and_loading: {value: 45, basis: placeholder, note: "load tips, reservoirs, iDOT source plate, cell suspension"}
+  min_monitoring_and_interventions_per_run: {value: 20, basis: placeholder, note: "faults answered, from the scenario catalogue; 0 if nothing happens"}
+  min_day3_loading: {value: 15, basis: placeholder}
+  min_review_of_package: {value: 20, basis: placeholder, note: "check flags and deviations in the data package"}
+  residual_error_probability_per_run: {value: 0.02, basis: placeholder, note: "operator loading mistakes; custody and checks catch the rest"}
+
+economics:
+  labour_cost_per_hour: {value: 85, basis: placeholder, note: "fully loaded EUR/h"}
+  cost_of_a_failed_plate: {value: 450, basis: placeholder, note: "cells, reagents, compounds and instrument time, EUR"}
+  runs_per_week: {value: 4, basis: placeholder, note: "assay plates per week during campaigns"}
+  weeks_per_year: {value: 44, basis: placeholder}
+  years: {value: 5, basis: placeholder}
+  service_share_of_capex_per_year: {value: 0.08, basis: placeholder}
+  discount_rate: {value: 0.08, basis: placeholder}
+  capex_usd:
+    flex_base: {value: 24950, basis: source, url: "https://www.excedr.com/blog/featured-manufacturer-opentrons", note: "starting price of the Flex robot; pipettes, gripper, modules and tips extra"}
+    flex_pipettes_gripper_modules: {value: 30000, basis: placeholder, note: "1-ch and 8-ch pipettes, gripper, heater-shaker; get a quote"}
+    idot: {value: 60000, basis: placeholder, note: "no public list price found; get a quote"}
+    arm_cell: {value: 80000, basis: placeholder, note: "cobot arm is only 40-50% of a deployed cell (https://grabarobot.com/blog/universal-robots-price-guide-2026/)"}
+    centrifuge_incubator_reader_interfaces: {value: 20000, basis: placeholder, note: "assuming the instruments exist; interfaces and fixtures only"}
+  one_off_effort_hours:
+    integration_and_scheduling_software: {value: 320, basis: placeholder}
+    validation_iq_oq_pq: {value: 160, basis: placeholder}
+    method_transfer_and_training: {value: 80, basis: placeholder}
+
+variants:                                 # alternatives to the full system, compared on the same plates per week
+  flex_and_idot_no_arm:
+    description: "Flex and iDOT only; a person carries plates between instruments and starts each step"
+    capex_not_needed: [arm_cell, centrifuge_incubator_reader_interfaces]
+    effort_scale: {value: 0.6, basis: placeholder, note: "less integration and validation work without the arm and the scheduler"}
+    extra_hands_on: "carrying plates between instruments, as in the manual baseline"
+
+fit_criteria:                            # weight (sums to 100) and how the score is derived
+  repetition_and_volume:        {weight: 15, rule: "manual transfer operations per plate: >=1000 -> 5, >=500 -> 4, >=200 -> 3, >=50 -> 2, else 1"}
+  hands_on_burden:              {weight: 15, rule: "manual hands-on hours per plate: >=6 -> 5, >=4 -> 4, >=2 -> 3, >=1 -> 2, else 1"}
+  timing_criticality:           {weight: 15, rule: "tightest manual window ratio (compound-to-cells: carry plate, media, cells to the last well; or the first-to-last-well reagent lag): over the limit -> 5, over half -> 3, else 1"}
+  process_definition:           {weight: 10, rule: "5 if the spec passes pre-flight with no errors; else 2"}
+  error_and_deviation_impact:   {weight: 10, rule: "expected failed plates per year as a share of runs: >=15% -> 5, >=8% -> 4, >=4% -> 3, >=1% -> 2, else 1"}
+  data_integrity_need:          {weight: 10, score: 5, basis: placeholder, note: "audit trail, FAIR package, AnIML required by the use case"}
+  technical_readiness:          {weight: 10, score: 3, basis: placeholder, note: "Flex has a Python API and a gripper; iDOT is driven by worklist files; the arm needs custom integration"}
+  throughput_growth:            {weight: 5,  score: 3, basis: placeholder}
+  method_stability:             {weight: 10, score: 4, basis: placeholder, note: "the assay is defined; the spec still contains VERIFY limits"}
+fit_thresholds: {strong: 75, conditional: 55}
+
+vendors:                                  # facts only where a source is given; everything else is "quote required"
+  compound_dispensing:
+    - {name: "Dispendix I.DOT (S/L)", facts: "pressure-based non-contact; 10 nL across 384 wells in about 20 s; dead volume < 1 uL (water); 0.1 nL resolution; max 30 uL; SBS plates up to 1536 wells; no public price", url: "https://www.cytena.com/wp-content/uploads/2025/05/I.DOT-S-Technical-Datasheet.pdf"}
+    - {name: "Acoustic dispensing (e.g. Beckman Echo)", facts: "fixed 2.5 nL droplets, transfer limited to low microlitres, dead volume up to 21 nL; typically a higher price point and transducer maintenance (vendor-written comparison, I.DOT maker)", url: "https://dispendix.com/blog/acoustic-dispensing"}
+  liquid_handling:
+    - {name: "Opentrons Flex", facts: "starting at USD 24,950 (August 2026); gripper moves labware; 96-channel pipette and gripper supported; Python API", url: "https://www.excedr.com/blog/featured-manufacturer-opentrons"}
+    - {name: "Hamilton / Tecan / Beckman workstations", facts: "high-end workstations commonly USD 100,000 to 500,000 or more; Hamilton approx. USD 100,000 to 2 million (2023 article); validated vendor software and service networks", url: "https://www.excedr.com/blog/how-much-does-a-liquid-handler-cost"}
+  plate_handling:
+    - {name: "Built-in Flex gripper", facts: "moves plates within the Flex deck and 4 staging slots; cannot reach a separate incubator or reader", url: "https://www.excedr.com/blog/featured-manufacturer-opentrons"}
+    - {name: "Cobot arm cell", facts: "arm is only 40-50% of a deployed cell cost; needs grippers, safety, fixtures and integration", url: "https://grabarobot.com/blog/universal-robots-price-guide-2026/"}

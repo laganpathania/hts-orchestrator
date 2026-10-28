@@ -1,0 +1,14 @@
+[WARN] V001: Final DMSO is 0.075% (up to 30 nL into 40 uL), above the 0.05% warning level (limit 0.1%). Run a solvent tolerance check for this cell line -> Build continues, warning recorded in run record (Scientist: confirm before running)
+[WARN] V042: First-to-last-well reagent lag: estimated 14.1 min, window 15 min (above 80% of window) -> Build continues, warning recorded in run record (Scientist: confirm before running)
+
+Built 5 files + manifest in out/t/HTS-CTG3D-001 (2 warning(s))
+  simulate flex_1_dilution.py: pass
+  simulate flex_2_seeding.py: pass
+  simulate flex_3_readout.py: pass
+
+Run d97bef87-496f-43fc-84f0-23c6649cc4ff (simulated) -> out/t/package-HTS-CTG3D-001-d97bef87
+  Z' 0.73, S/B 33.7, 14 active compounds
+  [DEVIATION] D050: A person intervened during the run: E101 on flex during flex_dilution_series (by SIMULATED-OPERATOR)
+  AnIML: experiment.animl validated against urn:org:astm:animl:schema:core:draft:0.90 (version 0.90)
+  package verification: OK
+[exit 0]

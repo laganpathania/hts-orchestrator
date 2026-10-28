@@ -1,0 +1,155 @@
+# Risk assessment (FMEA style). Severity / occurrence / detectability on a 1-5 scale (5 = worst).
+# RPN = S x O x D. "before" is without the system's controls, "after" with them.
+# The ratings are the author's judgement for this demo and are meant to be challenged in a review.
+# Every control lists the codes or mechanisms that reduce the risk; every risk must be covered by at least one
+# OQ test case, and `python -m htsorch qualify` fails if not.
+scale:
+  severity:      {1: no effect on data, 3: some wells unusable, 5: whole plate or the decision is wrong}
+  occurrence:    {1: very unlikely, 3: expected once in a while, 5: expected often}
+  detectability: {1: always caught before harm, 3: caught by checking, 5: not noticed}
+acceptance: {rpn_low_max: 20, rpn_medium_max: 40}   # above medium = high, needs a further control
+risks:
+  - id: R-01
+    failure: Compound dosed twice or not at all after an interrupted dispense
+    effect: Wrong concentration in some wells, a wrong dose-response curve
+    s: 5
+    before: {o: 3, d: 4}
+    controls: [E201, E202, V030, resume with only the short wells]
+    after: {o: 1, d: 2}
+    urs: [URS-10, URS-11]
+  - id: R-02
+    failure: Plate lost or dropped in transit and the run carries on
+    effect: Data attributed to the wrong or an unknown plate
+    s: 5
+    before: {o: 2, d: 4}
+    controls: [E302, K009, K010, C001, C002, D051]
+    after: {o: 1, d: 1}
+    urs: [URS-07, URS-08]
+  - id: R-03
+    failure: Plate placed in the wrong place or out of order
+    effect: Step skipped, plate processed at the wrong station
+    s: 4
+    before: {o: 3, d: 3}
+    controls: [K003, K004, K005, K006, K007, K012, K013, K014]
+    after: {o: 1, d: 1}
+    urs: [URS-07]
+  - id: R-04
+    failure: Cells wait too long before dosing or reagent is added too late
+    effect: Viability and signal drift between wells
+    s: 4
+    before: {o: 3, d: 4}
+    controls: [V040, V041, V042, D040, D041, D042, window check before cells are committed]
+    after: {o: 2, d: 1}
+    urs: [URS-02, URS-14]
+  - id: R-05
+    failure: Incubation time off target
+    effect: Different compound exposure than planned
+    s: 4
+    before: {o: 3, d: 3}
+    controls: [V043, D043]
+    after: {o: 2, d: 1}
+    urs: [URS-02, URS-12, URS-14]
+  - id: R-06
+    failure: Incubator temperature excursion during the 72 h
+    effect: Spheroid growth changed in the plate
+    s: 4
+    before: {o: 2, d: 4}
+    controls: [E401, D052]
+    after: {o: 2, d: 1}
+    urs: [URS-10, URS-14]
+  - id: R-07
+    failure: Lysis or shaking too short for 3D spheroids
+    effect: Incomplete lysis, low and uneven signal
+    s: 4
+    before: {o: 3, d: 4}
+    controls: [V044, E701, shake restarts in full]
+    after: {o: 1, d: 2}
+    urs: [URS-06, URS-10]
+  - id: R-08
+    failure: Edge effect from evaporation over 72 h
+    effect: Perimeter wells read differently from interior wells
+    s: 3
+    before: {o: 4, d: 3}
+    controls: [V013, V050, V051, V052, edge policy and stratified controls]
+    after: {o: 2, d: 2}
+    urs: [URS-03]
+  - id: R-09
+    failure: DMSO concentration toxic to cells
+    effect: Cell death unrelated to the compound
+    s: 4
+    before: {o: 2, d: 3}
+    controls: [V001, V002, V003]
+    after: {o: 1, d: 1}
+    urs: [URS-01]
+  - id: R-10
+    failure: Tips, reservoir liquid or iDOT source run out in the middle of a step
+    effect: Partial step, delay, aging of cells
+    s: 3
+    before: {o: 4, d: 3}
+    controls: [V020, V021, V030, V060, E101, E102, E202]
+    after: {o: 2, d: 1}
+    urs: [URS-01, URS-10, URS-11]
+  - id: R-11
+    failure: Run state or spec changed between day 0 and day 3
+    effect: Results come from a different experiment than the one recorded
+    s: 5
+    before: {o: 2, d: 4}
+    controls: [spec hash check, state hash chain, custody chain check on resume]
+    after: {o: 1, d: 1}
+    urs: [URS-12, URS-13]
+  - id: R-12
+    failure: Audit trail edited or deleted
+    effect: Nobody can show what really happened
+    s: 5
+    before: {o: 2, d: 5}
+    controls: [hash-chained event log, hash-chained custody log, package verification]
+    after: {o: 1, d: 1}
+    urs: [URS-13, URS-15]
+  - id: R-13
+    failure: Nobody available when a fault needs a person
+    effect: The system continues unsafely, or stops without anyone knowing
+    s: 4
+    before: {o: 3, d: 4}
+    controls: [pause with saved reason, exit code 2, resume only with a named person, D050]
+    after: {o: 2, d: 1}
+    urs: [URS-10, URS-14, URS-19]
+  - id: R-14
+    failure: Wrong plate in the reader or a reader file for another plate
+    effect: Results assigned to the wrong plate
+    s: 5
+    before: {o: 2, d: 4}
+    controls: [E602, barcode check on import]
+    after: {o: 1, d: 1}
+    urs: [URS-18]
+  - id: R-15
+    failure: Retry loop that never ends
+    effect: Run blocked, plates age without anyone noticing
+    s: 3
+    before: {o: 2, d: 3}
+    controls: [max_retries, max_fixes, E001]
+    after: {o: 1, d: 1}
+    urs: [URS-10]
+  - id: R-16
+    failure: Simulated data mistaken for real data
+    effect: A decision is taken on invented results
+    s: 5
+    before: {o: 2, d: 3}
+    controls: [simulated flag in package, simulation truth kept out of the record]
+    after: {o: 1, d: 1}
+    urs: [URS-15]
+  - id: R-17
+    failure: Generated instrument program does not load or does the wrong thing
+    effect: Run cannot start, or wells wrongly dosed
+    s: 4
+    before: {o: 3, d: 3}
+    controls: [Opentrons simulate, worklist vs plate map check, protocol hashes in the package]
+    after: {o: 1, d: 1}
+    urs: [URS-04, URS-05, URS-15]
+  - id: R-18
+    failure: Quarantined plate used by mistake
+    effect: Suspect plate gives data that look normal
+    s: 4
+    before: {o: 2, d: 3}
+    controls: [Q001, Q002, K008, K009]
+    after: {o: 1, d: 1}
+    urs: [URS-09]

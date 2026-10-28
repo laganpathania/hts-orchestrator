@@ -1,0 +1,10 @@
+description: the arm keeps failing the same handoff; retries run out and the operator decides
+faults:
+  - {device: arm, command: move, code: E301, at: 3, times: 4}   # three retries are allowed, the fourth failure stops
+operator: {response_min: 15, stop_decision: retry}
+expect:
+  status: complete
+  faults: [E301, E301, E301, E301]
+  deviations: [D050]
+  interventions: 1
+  plate_flags: {ASSAY-0001: []}                 # a handoff that never picked the plate up leaves no flag

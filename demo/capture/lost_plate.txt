@@ -1,0 +1,12 @@
+[WARN] V001: Final DMSO is 0.075% (up to 30 nL into 40 uL), above the 0.05% warning level (limit 0.1%). Run a solvent tolerance check for this cell line -> Build continues, warning recorded in run record (Scientist: confirm before running)
+[WARN] V042: First-to-last-well reagent lag: estimated 14.1 min, window 15 min (above 80% of window) -> Build continues, warning recorded in run record (Scientist: confirm before running)
+
+Built 5 files + manifest in out/a/HTS-CTG3D-001 (2 warning(s))
+
+Run e4f7f64a-4097-4d96-b25f-1ae693bf5a25 (simulated) -> out/a/package-HTS-CTG3D-001-e4f7f64a
+  Z' 0.73, S/B 33.7, 14 active compounds
+  [DEVIATION] D050: A person intervened during the run: E302 on arm during arm_to_centrifuge (by SIMULATED-OPERATOR)
+  [DEVIATION] D051: Assay plate custody was uncertain for a time: plate lost in transit flex_deck -> centrifuge: E302 Plate lost or dropped in transit
+  AnIML: not exported (disabled)
+  package verification: OK
+[exit 0]

@@ -1,0 +1,9 @@
+description: half the reagent is loaded; the refill splits the readout step and only the later wells wait
+inventory:
+  reservoirs: {reagent: {fraction: 0.5}}
+expect:
+  status: complete
+  faults: [E102]
+  deviations: [D042, D050]                      # reagent lag window missed for the wells served after the refill
+  alerts: {D042: continue}                      # predicted and decided before more wells were dosed
+  resumed_steps: [flex_reagent]

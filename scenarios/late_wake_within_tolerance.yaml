@@ -1,0 +1,5 @@
+description: "the orchestrator wakes 1.5 h late, inside the 2 h tolerance, so no deviation"
+wake_delay_h: 1.5
+expect:
+  status: complete
+  deviations: []

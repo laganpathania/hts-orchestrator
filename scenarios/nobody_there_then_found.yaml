@@ -1,0 +1,14 @@
+description: same as nobody_there, then a person answers an hour later and the run finishes
+faults:
+  - {device: arm, command: move, code: E302, at: 5}
+operator: {available: false}
+then:
+  - {advance_min: 60}                           # an hour passes with the plate lost; still paused
+  - respond: {actor: A.Operator, decision: retry, note: found under the stacker}
+expect:
+  status: complete
+  faults: [E302]
+  deviations: [D050, D051]
+  interventions: 1
+  plate_flags: {ASSAY-0001: [C001, C002]}
+  events_include: [time_passed, operator_decision]

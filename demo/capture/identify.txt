@@ -1,0 +1,8 @@
+manual hands-on 5.6 h/plate; with automation 1.67 h/plate
+manual (hand) compound-to-cells 98.0 min vs 60 min window; reagent lag 11.2 vs 15 min
+reference, iDOT doses and people do the rest: 4.13 h, compound-to-cells 20.6 min
+automation fit 86.0% (strong)
+one-off 245354 EUR; net/year 68237 EUR; payback 3.6 y; NPV 27098 EUR
+break-even for 3 y payback: 4.6 runs/week (7.0 if costs are 1.5x)
+42 assumptions are placeholders: see out/i/identify.json
+[exit 0]

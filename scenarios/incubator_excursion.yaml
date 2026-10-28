@@ -1,0 +1,12 @@
+description: the incubator reports a temperature excursion when the plate is checked at wake-up
+faults:
+  - device: incubator
+    command: check
+    code: E401
+    detail: {temp_c: 41.5, minutes: 20}
+expect:
+  status: complete
+  faults: [E401]
+  deviations: [D050, D052]
+  interventions: 1
+  plate_flags: {ASSAY-0001: [E401]}

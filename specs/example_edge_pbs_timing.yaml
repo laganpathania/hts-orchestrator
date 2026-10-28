@@ -1,0 +1,123 @@
+# DEMO: pbs_fill with 2 replicates fits the plate, but 1-channel seeding makes the cells age past the hold window. Validator must block (V041).
+# Generated from ctg3d_screen.yaml with one change. Values marked VERIFY in the main spec still apply.
+experiment:
+  id: HTS-DEMO-EDGE-PBS-TIMING
+  description: '20 compounds x 5 concentrations x 3 replicates plus negative (DMSO solvent) and positive (kill) controls on
+    one randomized 384-well ULA round-bottom plate.
+
+    '
+  random_seed: 20261022
+assay:
+  plate:
+    barcode: ASSAY-0001
+    format: 384
+    description: Ultra-low-attachment round-bottom 384-well plate (spheroid)
+    opentrons_load_name: corning_384_wellplate_112ul_flat
+    max_working_volume_ul: 80
+  media_volume_ul: 20
+  cell_volume_ul: 20
+  compound_dispense:
+    min_nl: 20
+    top_nl: 30
+  edge:
+    policy: pbs_fill
+    pbs_volume_ul: 40
+  reagent:
+    name: CellTiter-Glo 3D
+    ratio_to_assay_volume: 1.0
+    shake_min: 5
+    incubate_min: 30
+    shake_min_required: 5
+    incubate_min_required: 25
+  limits:
+    dmso_max_percent: 0.1
+    dmso_warn_percent: 0.05
+compounds:
+  master_conc_mM: 20
+  master_available_ul: 30
+  ids:
+  - C01
+  - C02
+  - C03
+  - C04
+  - C05
+  - C06
+  - C07
+  - C08
+  - C09
+  - C10
+  - C11
+  - C12
+  - C13
+  - C14
+  - C15
+  - C16
+  - C17
+  - C18
+  - C19
+  - C20
+controls:
+  negative:
+    name: DMSO solvent
+    count: 42
+  positive:
+    name: Kill control
+    count: 42
+    master_conc_mM: 20
+    master_available_ul: 30
+dilution:
+  top_final_uM: 10
+  factor: 4
+  points: 5
+  replicates: 2
+prep_plate:
+  barcode: PREP-0001
+  well_volume_ul: 25
+  idot_source_dead_volume_ul: 5
+flex:
+  overage_ul: 1
+  mix_cell_every_cycles: 4
+  pipettes:
+    flex_1channel_50:
+      min_ul: 1
+      max_ul: 50
+    flex_8channel_50:
+      min_ul: 1
+      max_ul: 50
+  tip_racks_loaded:
+    dilution: 1
+    edge_fill: 1
+    seeding: 1
+    readout: 1
+  reservoirs:
+    media:
+      load_name: nest_12_reservoir_15ml
+      capacity_ul: 15000
+      dead_volume_ul: 1500
+    cells:
+      load_name: nest_12_reservoir_15ml
+      capacity_ul: 15000
+      dead_volume_ul: 1500
+    reagent:
+      load_name: nest_1_reservoir_195ml
+      capacity_ul: 195000
+      dead_volume_ul: 5000
+    dmso:
+      load_name: nest_12_reservoir_15ml
+      capacity_ul: 15000
+      dead_volume_ul: 1500
+    pbs:
+      load_name: nest_12_reservoir_15ml
+      capacity_ul: 15000
+      dead_volume_ul: 1500
+timing:
+  flex_cycle_s: 18
+  idot_dispense_min: 20
+  arm_transfer_min: 2
+  cell_prep_to_start_min: 5
+  windows:
+    compound_to_cells_max_min: 60
+    cell_suspension_max_age_min: 45
+    max_reagent_lag_min: 15
+    incubation_h: 72
+    incubation_tolerance_h: 2

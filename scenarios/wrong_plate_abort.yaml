@@ -1,0 +1,9 @@
+description: the reader sees the wrong plate barcode and the operator aborts
+faults:
+  - {device: reader, command: read, code: E602}
+operator: {stop_decision: abort}
+expect:
+  status: aborted
+  faults: [E602]
+  plate_flags: {ASSAY-0001: [Q001]}
+  events_absent: [read_luminescence]
